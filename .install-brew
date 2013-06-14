@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Disable GateKeeper
+spctl --master-disable
+
+# Install XCode Command line tools
+open -a Safari http://developer.apple.com/downloads
+ANSWER=`osascript -e 'tell app "System Events" to set myReply to button returned of (display dialog "Please log-in, download and install the Command Line Tools for XCode. When you are done, press OK to continue with Homebrew installation ...")'`
+
+if [ "$ANSWER" = "OK" ]; then
+  ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+fi
+
+brew doctor
