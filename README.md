@@ -90,6 +90,8 @@ Then to install the Homebrew formulae:
 
 [http://vanderveer.be/blog/2012/10/12/setting-up-my-perfect-developer-environment-on-osx-10-dot-8-mountain-lion-10-dot-8-2-final-edition/](http://vanderveer.be/blog/2012/10/12/setting-up-my-perfect-developer-environment-on-osx-10-dot-8-mountain-lion-10-dot-8-2-final-edition/)
 
+[http://vanderveer.be/blog/2012/04/28/pimping-out-sublime-text-2/](http://vanderveer.be/blog/2012/04/28/pimping-out-sublime-text-2/)
+
 ## Feedback
 
 Suggestions/improvements

@@ -145,4 +145,4 @@ alias mou="open -a Mou.app"
 alias decompile="mkdir -p src; for x in *.scpt; do osadecompile $x > src/${x/.scpt/}.applescript;done"
 
 # Open with Sublime Text 2
-alias opens="open -a Sublime\ Text\ 2"
+alias os="open -a Sublime\ Text\ 2"
