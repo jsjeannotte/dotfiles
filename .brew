@@ -63,6 +63,7 @@ brew install rename
 brew install tree
 brew install webkit2png
 brew install zopfli
+brew install imagemagick
 
 brew tap homebrew/versions
 #brew install lua52
@@ -88,10 +89,14 @@ installcask iterm2
 #installcask macvim
 installcask miro-video-converter
 
+#Python
+brew install python
+pip install pygments pylint httplib2 google-api-python-client python-dateutil --upgrade
+
+
+
 # Sublime Text
 installcask sublime-text
-sudo easy_install-2.7 pylint
-
 
 installcask the-unarchiver
 #installcask tor-browser

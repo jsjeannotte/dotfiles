@@ -146,3 +146,6 @@ alias decompile="mkdir -p src; for x in *.scpt; do osadecompile $x > src/${x/.sc
 
 # Open with Sublime Text 2
 alias os="open -a Sublime\ Text\ 2"
+
+# Pretty Print Json
+alias pprintjson="python -mjson.tool"

@@ -251,3 +251,22 @@ function gi() {
 	local IFS=,
 	eval npm install --save-dev grunt-{"$*"}
 }
+
+# Resize Canvas of image (needs imagemagick)
+function canvas {
+	if [[ $1 == "" ]]; then
+		echo "Usage: canvas [WIDTH_SIZE_IN_PIXELS]"
+	else
+		for IMAGE in *.png; do
+			WIDTH_AND_HEIGHT=`identify -verbose ${IMAGE} | grep Geometry | sed -E 's/.+Geometry: //'| awk -F'+' '{print $1}'`
+			WIDTH=`echo $WIDTH_AND_HEIGHT|awk -F'x' '{print $1}'`
+			HEIGHT=`echo $WIDTH_AND_HEIGHT|awk -F'x' '{print $2}'`
+			echo "Image=${IMAGE}, Width=${WIDTH}, Height: ${HEIGHT}"
+			if [[ $WIDTH -lt $1  ]]; then
+				echo "Image is < ${1}px wide. Brigning it up to ${1}px"
+				cp ${IMAGE} ${IMAGE}.bak
+				convert ${IMAGE} -gravity west -extent ${1}x${HEIGHT} ${IMAGE}
+			fi
+		done
+	fi
+}
