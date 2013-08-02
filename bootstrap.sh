@@ -2,6 +2,9 @@
 cd "$(dirname "${BASH_SOURCE}")"
 git pull origin master
 function doIt() {
+	
+	echo "Sync config scripts"
+	echo "============================"
 	rsync --exclude ".git/" \
 		--exclude ".DS_Store" \
 		--exclude "bootstrap.sh" \
@@ -9,6 +12,7 @@ function doIt() {
 		--exclude "LICENSE-GPL.txt" \
 		--exclude "LICENSE-MIT.txt" \
 		--exclude "Sublime Text 2"  \
+		--exclude "root"  \
 		-av --no-perms . ~
 	if [ -d ~/Library ]; then
 		if [ ! -d ~/Library/Application\ Support/Sublime\ Text\ 2/Installed\ Packages-old ]; then
@@ -18,6 +22,8 @@ function doIt() {
 			ln -sf `pwd`/Sublime\ Text\ 2/Installed\ Packages ~/Library/Application\ Support/Sublime\ Text\ 2/Installed\ Packages
 			ln -sf `pwd`/Sublime\ Text\ 2/Packages ~/Library/Application\ Support/Sublime\ Text\ 2/Packages
 			ln -sf `pwd`/Sublime\ Text\ 2/Pristine\ Packages ~/Library/Application\ Support/Sublime\ Text\ 2/Pristine\ Packages
+		else
+			echo "Skipping Sublime Symlink creation for config (normaly happens when the bootrap script was already run)."
 		fi
 	fi
 }
