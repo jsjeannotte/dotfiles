@@ -4,6 +4,7 @@
 	[
 		"Package Control",
 		"SideBarEnhancements",
+		"SublimeCodeIntel",
 		"SublimeLinter"
 	]
 }
