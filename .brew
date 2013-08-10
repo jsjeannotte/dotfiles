@@ -117,6 +117,8 @@ brew cask alfred link
 # Evernote
 echo "Y
 "|brew cask install evernote
+brew cask install skitch
+
 
 # DiffMerge
 installcask diffmerge
