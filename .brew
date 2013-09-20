@@ -67,6 +67,9 @@ brew install imagemagick
 
 brew install android-sdk
 
+# Figlet: Nice ascii big text
+brew install figlet
+
 brew tap homebrew/versions
 #brew install lua52
 
@@ -124,6 +127,9 @@ brew cask install skitch
 installcask diffmerge
 ln -s /Applications/DiffMerge.app/Contents/Resources/diffmerge.sh /usr/local/bin/diffmerge
 
+# Install SubEthaEdit
+installcask subethaedit
+
 # Remove outdated versions from the cellar
 brew cleanup
 
@@ -131,6 +137,9 @@ brew cleanup
 SCRIPTFOLDER="$( dirname "${BASH_SOURCE[0]}" )"
 echo "Copying files from $SCRIPTFOLDER/root/ to /"
 cd "$SCRIPTFOLDER"/root && cp -r . /
+
+# Install SSL certificates for lwp-request (some site will not work without this)
+sudo cpan install LMP::UserAgen Mozilla::CA
 
 # Manual install
 echo " "
