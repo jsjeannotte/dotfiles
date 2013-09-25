@@ -127,8 +127,8 @@ installcask skitch
 installcask diffmerge
 ln -s /Applications/DiffMerge.app/Contents/Resources/diffmerge.sh /usr/local/bin/diffmerge
 
-# Install SubEthaEdit
-installcask subethaedit
+#Install GMail Notifier
+installcask gmail-notifr
 
 # Remove outdated versions from the cellar
 brew cleanup
