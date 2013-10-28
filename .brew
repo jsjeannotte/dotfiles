@@ -130,6 +130,9 @@ ln -s /Applications/DiffMerge.app/Contents/Resources/diffmerge.sh /usr/local/bin
 #Install GMail Notifier
 installcask gmail-notifr
 
+# Install X-Quartz
+brew cask install x-quartz
+
 # Remove outdated versions from the cellar
 brew cleanup
 

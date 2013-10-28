@@ -11,6 +11,8 @@ alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"
 alias g="git"
+alias gs="git status -sb"
+alias gf="git flow"
 alias h="history"
 alias j="jobs"
 alias v="vim"
@@ -154,3 +156,6 @@ alias os="open -a Sublime\ Text\ 2"
 
 # Pretty Print Json
 alias pprintjson="python -mjson.tool"
+
+#Dates
+alias uts="date +%s"
