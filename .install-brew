@@ -7,7 +7,7 @@ spctl --master-disable
 
 # For OSX 10.9 (Maverick)
 sw_vers | grep 'ProductVersion:' | grep "10.9"
-if [ $? -eq 1 ]; then
+if [ $? -eq 0 ]; then
     echo "Maverick 10.9 detected"
     xcode-select --install
     ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
