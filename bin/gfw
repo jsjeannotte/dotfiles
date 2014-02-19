@@ -1,0 +1,371 @@
+#!/bin/bash
+
+function setup_terminal() {
+
+    tput colors 2>&1 > /dev/null
+    if [[ $? -eq 0 ]]; then
+        grey=$'\e[1;30m'
+        red=$'\e[1;31m'
+        green=$'\e[1;32m'
+        yellow=$'\e[1;33m'
+        blue=$'\e[1;34m'
+        magenta=$'\e[1;35m'
+        cyan=$'\e[1;36m'
+        white=$'\e[1;37m'
+    else
+        grey=''
+        red=''
+        green=''
+        yellow=''
+        blue=''
+        magenta=''
+        cyan=''
+        white=''
+    fi
+    
+    ## Uncomment the following to test colors
+    # echo "$grey" "grey"
+    # echo "$red" "red"
+    # echo "$green" "green"
+    # echo "$yellow" "yellow"
+    # echo "$magenta" "magenta"
+    # echo "$cyan" "cyan"
+    # echo "$white" "white"
+    # exit
+}
+
+function color_reset() {
+    tput sgr0   
+}
+
+STASHLINK=$(git remote show origin 2>/dev/null|grep "Fetch URL"|awk -F'/' '{print "https://stash.corp.netflix.com/projects/"$4"/repos/"substr($5, 0, length($5)-4)"/browse/"}')
+#git remote show origin 2>/dev/null|grep "Fetch URL"
+#https://stash.corp.netflix.com/projects/core/repos/nflx-alert-rater/browse
+
+function reset_feature_menu() {
+    prompt="Pick a command (press ENTER to see available options):"
+    options=("status" "set feature name" "checkout dev" "pull origin dev" "start" "commit" "publish" "finish" "push origin")
+    PS3="$prompt "
+    echo ""
+    echo "$green=========================================================="
+    echo "===================> Feature Workflow <==================="
+    echo "========================================================== $white"
+    echo "Stash link: $STASHLINK"
+    echo "Current folder: $(pwd)"
+    echo "New feature branch $blue$FEATURENAME$white"
+    echo "Previous command: $blue$opt ($REPLY)$white"
+    echo "$yellow----- Start git status output -----$white"
+    git status
+    echo "$yellow----- End git status output -------$white"
+    echo " "
+    color_reset
+}
+
+function feature() {
+    
+
+    ####################################################
+    # Feature
+    ####################################################
+
+    local COMMITMESSAGE
+    local FEATURENAME="UNSET"
+    
+    reset_feature_menu
+    
+    select opt in "${options[@]}" "Quit"; do 
+
+        case "$REPLY" in
+
+        1 ) reset_feature_menu;;
+
+        2 ) echo -n "Enter feature name: "; 
+            read FEATURENAME; 
+            reset_feature_menu;;
+
+        3 ) echo "RUNNING: git checkout dev"; 
+            git checkout dev;
+            reset_feature_menu;;
+
+        4 ) echo "RUNNING: git pull origin dev"; 
+            git pull origin dev;
+            reset_feature_menu;;
+        
+        5 ) echo "RUNNING: git flow feature start $FEATURENAME"; 
+            git flow feature start $FEATURENAME;
+            reset_feature_menu;;
+
+        6 ) echo -n "Enter commit message: "; 
+            read COMMITMESSAGE; 
+            echo "RUNNING: git commit -a -m \"$COMMITMESSAGE\"";
+            git commit -a -m "$COMMITMESSAGE";
+            reset_feature_menu;;
+
+        7 ) echo "RUNNING: git flow feature publish $FEATURENAME"; 
+            git flow feature publish $FEATURENAME;
+            echo " "
+            echo "$red GO TO STASH AND DO PULL REQUEST USING THE BRANCH '$FEATURENAME' AS THE SOURCE AND 'dev' AS THE TARGET"
+            echo "$red REVIEWER WILL ACCEPT/DENY THE PULL REQUEST (BUT NOT MERGE!!!! The git flow finish will take care of the merge)"
+            echo "$white "
+            reset_feature_menu;;
+
+        8 ) echo "RUNNING: git flow feature finish $FEATURENAME"; 
+            git flow feature finish $FEATURENAME;
+            reset_feature_menu;;
+
+        9 ) echo "RUNNING: git push --tags origin && git push origin";
+            git push --tags origin && git push origin;
+            reset_feature_menu;;
+
+        $(( ${#options[@]}+1 )) ) echo "Back to main menu"; break;;
+        *) echo "Invalid option. Try another one.";reset_feature_menu; continue;;
+
+        esac
+
+    done 
+
+}
+
+function reset_release_menu() {
+    prompt="Pick a command (press ENTER to see available options):"
+    options=("status" "set new version number" "checkout master" "pull origin master" "start" "commit" "publish" "finish" "push origin")
+    PS3="$prompt "
+    echo ""
+    echo "$green=========================================================="
+    echo "===================> Release Workflow <==================="
+    echo "========================================================== $white"
+    echo "Stash link: $STASHLINK"
+    echo "Current folder: $(pwd)"
+    echo "Last released version is $blue$LASTVERSION$white"
+    echo "New version will be $blue$VERSIONNUMBER$white"
+    echo "Previous command: $blue$opt ($REPLY)$white"
+    echo "$yellow----- Start git status output -----$white"
+    git status
+    echo "$yellow----- End git status output -------$white"
+    echo " "
+    color_reset
+}
+
+function release() {
+    
+    ####################################################
+    # Release
+    ####################################################
+
+    local LASTVERSION=$(git describe master)
+    if [[ $? -ne 0 ]]; then
+        color_reset
+        exit 1
+    fi
+
+    local COMMITMESSAGE
+    local VERSIONNUMBER="UNSET"
+    local RELEASELIST="$(git flow release list 2>/dev/null)"
+    if [[ "$RELEASELIST" != "" ]]; then
+        echo ""
+        echo -n "${red}WARNING: Detected a local release branch. Trying to load it's version ... "
+        VERSIONNUMBER=$(echo "$RELEASELIST"|egrep -o "[vV]?[0-9]+\..*")
+        echo "Got VERSIONNUMBER=$VERSIONNUMBER"
+        echo "If it's not what you expected, you need to manually set the version using the corresponding option in the menu.${white}"
+    fi
+
+    reset_release_menu
+    
+    select opt in "${options[@]}" "Quit"; do 
+
+        case "$REPLY" in
+
+        1 ) reset_release_menu;;
+
+        2 ) echo -n "Enter new version: "; 
+            read VERSIONNUMBER; 
+            reset_release_menu;;
+
+        3 ) echo "RUNNING: git checkout master"; 
+            git checkout master;
+            reset_release_menu;;
+
+        4 ) echo "RUNNING: git pull origin master"; 
+            git pull origin master;
+            reset_release_menu;;
+
+        5 ) echo "RUNNING: git flow release start $VERSIONNUMBER"; 
+            git flow release start $VERSIONNUMBER;
+            reset_release_menu;;
+
+        6 ) echo -n "Enter commit message: "; 
+            read COMMITMESSAGE; 
+            echo "RUNNING: git commit -a -m \"$COMMITMESSAGE\"";
+            git commit -a -m "$COMMITMESSAGE";
+            reset_release_menu;;
+
+        7 ) echo "RUNNING: git flow release publish $VERSIONNUMBER"; 
+            git flow release publish $VERSIONNUMBER;
+            echo " "
+            echo "$red GO TO STASH AND DO PULL REQUEST USING THE BRANCH 'release/$VERSIONNUMBER' AS THE SOURCE AND 'master' AS THE TARGET"
+            echo "$red REVIEWER WILL ACCEPT/DENY THE PULL REQUEST (BUT NOT MERGE!!!! The git flow finish will take care of the merge)"
+            echo "$white "
+            reset_release_menu;;
+        
+        8 ) echo "RUNNING: git flow release finish $VERSIONNUMBER"; 
+            git flow release finish $VERSIONNUMBER;
+            reset_release_menu;;
+
+        9 ) echo "RUNNING: git push --tags origin && git push origin";
+            git push --tags origin && git push origin;
+            reset_release_menu;;
+
+        $(( ${#options[@]}+1 )) ) echo "Back to main menu"; break;;
+        *) echo "Invalid option. Try another one.";reset_release_menu; continue;;
+
+        esac
+
+    done 
+    
+}
+
+function reset_hotfix_menu() {
+    prompt="Pick a command (press ENTER to see available options):"
+    options=("status" "set new version number" "checkout master" "pull origin master" "start" "commit" "finish" "push origin")
+    PS3="$prompt "
+    echo ""
+    echo "$green=========================================================="
+    echo "===================> Hotfix Workflow <===================="
+    echo "========================================================== $white"
+    echo "Stash link: $STASHLINK"
+    echo "Current folder: $(pwd)"
+    echo "Last released version is $blue$LASTVERSION$white"
+    echo "New version will be $blue$VERSIONNUMBER$white"
+    echo "Previous command: $blue$opt ($REPLY)$white"
+    echo "$yellow----- Start git status output -----$white"
+    git status
+    echo "$yellow----- End git status output -------$white"
+    echo " "
+    color_reset
+}
+
+function hotfix() {
+    
+    ####################################################
+    # Hotfix
+    ####################################################
+
+    local LASTVERSION=$(git describe master)
+    if [[ $? -ne 0 ]]; then
+        color_reset
+        exit 1
+    fi
+
+    local COMMITMESSAGE
+    local VERSIONNUMBER="UNSET"
+    local HOTFIXLIST="$(git flow hotfix list 2>/dev/null)"
+    if [[ "$HOTFIXLIST" != "" ]]; then
+        echo ""
+        echo -n "${red}WARNING: Detected a local hotfix branch. Trying to load it's version ... "
+        VERSIONNUMBER=$(echo "$HOTFIXLIST"|egrep -o "[vV]?[0-9]+\..*")
+        echo "Got VERSIONNUMBER=$VERSIONNUMBER"
+        echo "If it's not what you expected, you need to manually set the version using the corresponding option in the menu.${white}"
+    fi
+
+    reset_hotfix_menu
+    
+    select opt in "${options[@]}" "Quit"; do 
+
+        case "$REPLY" in
+
+        1 ) reset_hotfix_menu;;
+
+        2 ) echo -n "Enter new version: "; 
+            read VERSIONNUMBER; 
+            reset_hotfix_menu;;
+
+        3 ) echo "RUNNING: git checkout master"; 
+            git checkout master;
+            reset_hotfix_menu;;
+
+        4 ) echo "RUNNING: git pull origin master"; 
+            git pull origin master;
+            reset_hotfix_menu;;
+
+        5 ) echo "RUNNING: git flow hotfix start $VERSIONNUMBER"; 
+            git flow hotfix start $VERSIONNUMBER;
+            reset_hotfix_menu;;
+
+        6 ) echo -n "Enter commit message: "; 
+            read COMMITMESSAGE; 
+            echo "RUNNING: git commit -a -m \"$COMMITMESSAGE\"";
+            git commit -a -m "$COMMITMESSAGE";
+            reset_hotfix_menu;;
+
+        7 ) echo "RUNNING: git flow hotfix finish $VERSIONNUMBER"; 
+            git flow hotfix finish $VERSIONNUMBER;
+            reset_hotfix_menu;;
+
+        8 ) echo "RUNNING: git push --tags origin && git push origin";
+            git push --tags origin && git push origin;
+            reset_hotfix_menu;;
+
+        $(( ${#options[@]}+1 )) ) echo "Back to main menu"; break;;
+        *) echo "Invalid option. Try another one.";reset_hotfix_menu; continue;;
+
+        esac
+
+    done 
+    
+}
+
+
+function reset_main_menu() {
+    echo " "
+    echo "Welcome to GFW - Git Flow Wizard"
+    #echo "$blue" "Welcome to GFW - Git Flow Wizard"
+    echo " "
+    options=("feature" "release" "hotfix")
+    prompt="Pick a workflow:"        
+    PS3="$prompt "
+    color_reset
+}
+
+function main() {
+    
+    reset_main_menu
+    
+    select opt in "${options[@]}" "Quit"; do 
+
+        case "$REPLY" in
+
+        1 ) feature; reset_main_menu;;
+        2 ) release; reset_main_menu;;
+        3 ) hotfix; reset_main_menu;;
+
+        $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
+        *) echo "Invalid option. Try another one.";reset_main_menu; continue;;
+
+        esac
+
+    done   
+}
+
+
+##### MAIN ######
+
+setup_terminal
+
+if [[ $# -ne 1 ]]; then
+    main
+else
+    if [[ "$1" == "feature" ]]; then
+        opt="feature"
+        feature
+    elif [[ "$1" == "release" ]]; then
+        opt="release"
+        release
+    elif [[ "$1" == "hotfix" ]]; then
+        opt="hotfix"
+        hotfix
+    else
+        echo "ERROR: Unrecognize workflow"
+    fi
+fi
+
+color_reset

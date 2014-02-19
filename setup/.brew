@@ -1,0 +1,191 @@
+#!/usr/bin/env bash
+
+# Disable GateKeeper
+spctl --master-disable
+
+# Make sure we’re using the latest Homebrew
+brew update
+
+# Upgrade any already-installed formulae
+brew upgrade
+
+# Install GNU core utilities (those that come with OS X are outdated)
+brew install coreutils
+echo "Don’t forget to add $(brew --prefix coreutils)/libexec/gnubin to \$PATH."
+# Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
+brew install findutils
+# Install Bash 4
+brew install bash
+
+# Install wget with IRI support
+brew install wget --enable-iri
+
+# Install RingoJS and Narwhal
+# Note that the order in which these are installed is important; see http://git.io/brew-narwhal-ringo.
+#brew install ringojs
+#brew install narwhal
+
+# Install more recent versions of some OS X tools
+brew tap homebrew/dupes
+brew install homebrew/dupes/grep
+#brew tap josegonzalez/homebrew-php
+#brew install php54
+
+# These two formulae didn’t work well last time I tried them:
+#brew install homebrew/dupes/vim
+#brew install homebrew/dupes/screen
+
+######################################
+# Install other useful binaries
+######################################
+brew install ack
+#brew install exiv2
+brew install git
+brew install bash-completion
+
+# Tweek to make the completion work the 'g' alias for git
+cat <<\EOF>/usr/local/etc/bash_completion.d/g-completion.bash
+complete -o bashdefault -o default -o nospace -F _git g 2>/dev/null \ || complete -o default -o nospace -F _git g
+EOF
+
+brew install git-flow
+
+brew install lynx
+brew install node
+# Pigz = Parallel gzip - Zlib
+brew install pigz
+
+# http://blog.johnrbussiculo.com/2013/01/batch-rename-multiple-files-mac-osx-command-line/
+brew install rename
+
+#brew install rhino
+brew install tree
+brew install webkit2png
+brew install zopfli
+brew install imagemagick
+
+brew install android-sdk
+
+# Figlet: Nice ascii big text (to show text in all available fonts: showfigfonts test)
+brew install figlet
+# Personal favorites: roman, big, cyberlarge, doh, nancyj, starwars
+function figletfavs() {
+    for i in roman big cyberlarge doh nancyj starwars
+    do 
+        echo " "
+        echo " "
+        echo " "
+        echo "$i:"
+        echo " "
+        figlet -f $i -w 200 $1
+    done  
+}
+
+
+brew install gawk
+
+brew tap homebrew/versions
+#brew install lua52
+
+# Install native apps
+brew tap phinze/homebrew-cask
+brew install brew-cask
+
+function installcask() {
+  if brew cask info "${@}" | grep "Not installed" > /dev/null; then
+    brew cask install "${@}"
+  else
+    echo "${@} is already installed."
+  fi
+}
+
+installcask dropbox
+#installcask google-chrome
+#installcask google-chrome-canary
+installcask imagealpha
+installcask imageoptim
+installcask iterm2
+#installcask macvim
+installcask miro-video-converter
+
+#Python
+brew install python
+pip install pygments pylint httplib2 google-api-python-client python-dateutil --upgrade
+
+# Sublime Text
+installcask sublime-text
+
+installcask the-unarchiver
+installcask tor-browser
+installcask transmission
+#installcask ukelele
+#installcask virtualbox
+installcask vlc
+installcask mou
+
+installcask pycharm
+
+# Alfred
+installcask alfred
+brew cask alfred link
+
+# Evernote
+echo "Y
+"|installcask evernote
+installcask skitch
+
+
+# DiffMerge
+installcask diffmerge
+ln -s /Applications/DiffMerge.app/Contents/Resources/diffmerge.sh /usr/local/bin/diffmerge
+
+#Install GMail Notifier
+installcask gmail-notifr
+
+# Install X-Quartz
+brew cask install x-quartz
+
+# Install markdown
+brew install markdown
+
+# Remove outdated versions from the cellar
+brew cleanup
+
+# Copy helper scripts
+SCRIPTFOLDER="$( dirname "${BASH_SOURCE[0]}" )"
+echo "Copying files from $SCRIPTFOLDER/root/ to /"
+cd "$SCRIPTFOLDER"/root && cp -r . /
+
+# Install SSL certificates for lwp-request (some site will not work without this)
+sudo cpan install LMP::UserAgen Mozilla::CA
+
+# Install DNSYO: Query 1500+ DNS server and give report of the results
+sudo pip install dnsyo --upgrade
+# Example: dnsyo movies.netflix.com --extended -q=ALL
+
+# Manual install
+echo " "
+echo " "
+echo "====================================================================================================================="
+echo "Automatic installation completed. Here are the links to paid apps for manual installation (Command+Click from iTerm):"
+echo "====================================================================================================================="
+echo "http://magnet.crowdcafe.com/ (macappstore://itunes.apple.com/app/id441258766?mt)"
+echo "http://google.com/chrome "
+echo " "
+echo "====================================================================================================================="
+echo "Let's launch some app so that you can configure them:"
+echo "====================================================================================================================="
+echo "Dropbox"
+open -a Dropbox
+echo "Alfred 2"
+open -a Alfred\ 2
+echo "Caffeine"
+open -a Caffeine
+echo "Evernote"
+open -a Evernote
+echo " "
+echo " "
+echo "====================================================================================================================="
+echo "When your done, please restart your system"
+echo "====================================================================================================================="
+

@@ -13,4 +13,7 @@ Thumbs.db
 .Spotlight-V100
 .Trashes
 
-.extra
+# Others
+.dropbox
+.sublime-project
+bashrc.extra.sh

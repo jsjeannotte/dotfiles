@@ -32,12 +32,16 @@ set modelines=4
 " Enable per-directory .vimrc files and disable unsafe commands in them
 set exrc
 set secure
+
 " Enable line numbers
-set number
+" set number
+
 " Enable syntax highlighting
 syntax on
+
 " Highlight current line
-set cursorline
+" set cursorline
+
 " Make tabs as wide as two spaces
 set tabstop=2
 " Show “invisible” characters
@@ -64,14 +68,18 @@ set shortmess=atI
 " Show the current mode
 set showmode
 " Show the filename in the window titlebar
-set title
+" set title
 " Show the (partial) command as it’s being typed
 set showcmd
+
+
 " Use relative line numbers
-if exists("&relativenumber")
-	set relativenumber
-	au BufReadPost * set relativenumber
-endif
+"if exists("&relativenumber")
+"	set relativenumber
+"	au BufReadPost * set relativenumber
+"endif
+
+
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 

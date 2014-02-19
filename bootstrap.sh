@@ -7,11 +7,14 @@ function doIt() {
 	echo "============================"
 	rsync --exclude ".git/" \
 		--exclude ".DS_Store" \
+		--exclude ".dropbox" \
 		--exclude "bootstrap.sh" \
 		--exclude "README.md" \
 		--exclude "LICENSE-GPL.txt" \
 		--exclude "LICENSE-MIT.txt" \
 		--exclude "Sublime Text 2"  \
+		--exclude "Dictionaries"  \
+		--exclude "QuickLooksPlugins"  \
 		--exclude "root"  \
 		-av --no-perms . ~
 	if [ -d ~/Library ]; then
