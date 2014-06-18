@@ -1,0 +1,92 @@
+import groovy.json.*
+import org.cyberneko.html.parsers.SAXParser
+
+/**
+ * External dependencies for the build script
+ * @see http://www.gradle.org/docs/current/userguide/userguide_single.html#sec:external_dependencies
+ */
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.codehaus.groovy:groovy-all:2.1.6',
+                    'net.sourceforge.nekohtml:nekohtml:1.9.18'
+    }
+}
+
+archivesBaseName = 'sublime-gradle'
+
+ext {
+    gradleDoc = 'http://www.gradle.org/docs/current/dsl'
+}
+
+task createCompletions << {
+    def parser = new XmlSlurper(new org.cyberneko.html.parsers.SAXParser())
+
+    def links = [] as Set
+    parser.parse(gradleDoc).'**'.findAll {
+        it.name() == 'A' && it['@href'] =~ /^org\.gradle\.api/
+    }.each {
+        def link = it['@href'].toString().replaceAll(/\#.*/, '')
+        links << link
+    }
+
+    def items = [] as Set
+    links.each {
+        println it
+        parser.parse("$gradleDoc/$it").'**'.findAll {
+            it.name() == 'H4' && it.@class == 'signature'
+        }.each {
+            it.CODE.findAll {
+                it.@class == 'literal'
+            }.each {
+                println it.text()
+                items << it.text()
+            }
+        }
+        println "-------------------------\n"
+    }
+
+    def data = []
+    items.each {
+        data << [trigger: it, contents:it]
+    }
+
+    def json = new JsonBuilder()
+    json scope: 'source.groovy', completions: data
+
+    file('./gradle-completions.sublime-completions').write(json.toPrettyString())
+}
+
+task createPackages {
+    doFirst {
+        assert archivesBaseName
+        assert version != 'unspecified'
+        ext.homepage = "https://github.com/koizuss/$archivesBaseName"
+        ext.url = "${ext.homepage}/zipball/master"
+    }
+
+    doLast {
+        def json = new JsonBuilder()
+        json schema_version: '1.2', packages: [
+            [
+                "name": archivesBaseName,
+                "description": "Support for use Gradle on Sublime Text 2",
+                "author": "koizuss.apps@gmail.com",
+                "homepage": homepage,
+                "last_modified": new Date().format('yyyy-MM-dd HH:mm:ss'),
+                "platforms": [
+                    "*": [
+                        [
+                            "version": version,
+                            "url": url
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+        file('./packages.json').write(json.toPrettyString())
+    }
+}

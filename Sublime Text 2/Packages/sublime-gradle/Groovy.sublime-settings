@@ -1,0 +1,7 @@
+// Open .gradle files on Groovy syntax 
+{
+	"extensions":
+	[
+		"gradle"
+	]
+}

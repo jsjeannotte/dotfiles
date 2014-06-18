@@ -1,2 +1,2 @@
-file=~/Dropbox/OSX_Config/bashrc.extra.sh
+file=~/bashrc.extra.sh
 [ -r "$file" ] && source "$file"

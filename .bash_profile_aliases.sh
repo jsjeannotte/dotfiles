@@ -190,6 +190,24 @@ alias network="alias|grep -i 'network\|wi-fi\|wifi\|dns\|alias ip\|tcp'|sort"
 alias bouncecrashplan="sudo launchctl unload /Library/LaunchDaemons/com.crashplan.engine.plist && sleep 30 && sudo launchctl load /Library/LaunchDaemons/com.crashplan.engine.plist"
 
 # Show top 10 process
-alias p="ps -arxo '%cpu %mem command' | grep -v grep | head -13 | cut -c -$(tput cols)"
+alias p="ps -arxo '%cpu %mem command' | grep -v grep | head -13 | cut -c -\$(tput cols)"
 alias pfull="ps -arxo '%cpu %mem command' | grep -v grep | head -13"
 
+# SSH with keepalive
+alias ssh='ssh -o ServerAliveInterval=60 -o ConnectTimeout=5'
+
+# File size
+alias bigfiles='sudo find / -mount -type f -print0 | sudo xargs -0 du --block-size M | sort -r -n -k 1 | head -n 10'
+
+# Curl timeit
+alias curltimer='curl -w " 
+            time_namelookup:  %{time_namelookup}
+               time_connect:  %{time_connect}
+            time_appconnect:  %{time_appconnect}
+           time_pretransfer:  %{time_pretransfer}
+              time_redirect:  %{time_redirect}
+         time_starttransfer:  %{time_starttransfer}
+                            ----------
+                 time_total:  %{time_total}
+
+" -o /dev/null -s '

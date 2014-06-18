@@ -425,3 +425,9 @@ echo "Done. Note that some of these changes require a logout/restart to take eff
 # Set Hibernate mode to real hibernate (suspend to disk): longer battery life
 ###############################################################################
 sudo pmset -a hibernatemode 25
+
+
+###############################################################################
+# Disable Spotlight
+############################################################################### 
+sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist

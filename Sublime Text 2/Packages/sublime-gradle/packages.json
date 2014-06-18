@@ -1,0 +1,20 @@
+{
+    "schema_version": "1.2",
+    "packages": [
+        {
+            "name": "sublime-gradle",
+            "description": "Support for use Gradle on Sublime Text 2",
+            "author": "koizuss.apps@gmail.com",
+            "homepage": "https://github.com/koizuss/sublime-gradle",
+            "last_modified": "2013-09-17 15:45:29",
+            "platforms": {
+                "*": [
+                    {
+                        "version": "1.1.0",
+                        "url": "https://github.com/koizuss/sublime-gradle/zipball/master"
+                    }
+                ]
+            }
+        }
+    ]
+}

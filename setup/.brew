@@ -84,6 +84,16 @@ function figletfavs() {
 
 brew install gawk
 
+# Install markdown
+brew install markdown
+
+# Install F3 (test SD Card or any other volume integrety)
+brew install f3
+
+# Install watch
+brew install watch
+
+# Add homebrew/versions
 brew tap homebrew/versions
 #brew install lua52
 
@@ -143,10 +153,7 @@ ln -s /Applications/DiffMerge.app/Contents/Resources/diffmerge.sh /usr/local/bin
 installcask gmail-notifr
 
 # Install X-Quartz
-brew cask install x-quartz
-
-# Install markdown
-brew install markdown
+installcask install x-quartz
 
 # Remove outdated versions from the cellar
 brew cleanup

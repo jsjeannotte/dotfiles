@@ -437,6 +437,15 @@ function ssh-copy-id(){
 
 
 
+# Fix permissions for ssh related files 
+function ssh-fix-permissions(){
+    chmod g-w $HOME
+    chmod 700 $HOME/.ssh
+    chmod 600 $HOME/.ssh/authorized_keys
+}
+
+
+
 # Show all available bash colors
 function colors() {
     #

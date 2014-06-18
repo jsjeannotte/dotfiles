@@ -4,7 +4,12 @@
 	[
 		"Package Control",
 		"SideBarEnhancements",
+		"sublime-gradle",
 		"SublimeCodeIntel",
 		"SublimeLinter"
+	],
+	"repositories":
+	[
+		"https://github.com/koizuss/sublime-gradle"
 	]
 }
