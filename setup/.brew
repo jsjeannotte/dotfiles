@@ -133,15 +133,15 @@ installcask transmission
 installcask vlc
 installcask mou
 
-installcask pycharm
+installcask pycharm-ce
+installcask sourcetree
 
 # Alfred
 installcask alfred
 brew cask alfred link
 
 # Evernote
-echo "Y
-"|installcask evernote
+yes Y|installcask evernote
 installcask skitch
 
 

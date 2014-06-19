@@ -10,13 +10,16 @@ sw_vers | grep 'ProductVersion:' | grep "10.9"
 if [ $? -eq 0 ]; then
     echo "Maverick 10.9 detected"
     xcode-select --install
-    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 else
     open -a Safari http://developer.apple.com/downloads
     ANSWER=`osascript -e 'tell app "System Events" to set myReply to button returned of (display dialog "Please log-in, download and install the Command Line Tools for XCode. When you are done, press OK to continue with Homebrew installation ...")'`
     if [ "$ANSWER" = "OK" ]; then
-        ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+        ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
     fi
 fi
+
+echo "In case the auto-install doesn't work, you can go here to download xcode command line tools manually:"
+echo "https://developer.apple.com/downloads/index.action?name=for%20Xcode%20-"
 
 brew doctor
