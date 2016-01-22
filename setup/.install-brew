@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+
+# Bug with Yosemite: http://www.ostricher.com/2014/10/fixing-homebrew-on-os-x-yosemite/
+
 # Disable GateKeeper
 spctl --master-disable
 

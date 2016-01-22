@@ -473,3 +473,14 @@ function colors() {
     done
     echo
 }
+
+
+
+# Show title for term window/tab
+function show_title() {
+    echo -n -e "\033]0;$1\007"
+}
+
+# echo -e "\033]6;1;bg;red;brightness;255\a"
+
+

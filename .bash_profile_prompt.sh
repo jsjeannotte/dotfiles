@@ -557,13 +557,13 @@ function powerline_last_status_prompt {
 
 function show_icon() {
   ENVIRONMENT=""
-  if [[ ! -z $NETFLIX_ENVIRONMENT ]]; then
-    if [[ $NETFLIX_ENVIRONMENT == "prod" ]]; then
-      ENVIRONMENT="🔴 "
-    else
-      ENVIRONMENT="⚪️ "
-    fi
-  fi
+  # if [[ ! -z $NETFLIX_ENVIRONMENT ]]; then
+  #   if [[ $NETFLIX_ENVIRONMENT == "prod" ]]; then
+  #     ENVIRONMENT="🔴 "
+  #   else
+  #     ENVIRONMENT="⚪️ "
+  #   fi
+  # fi
 }
 
 function powerline_prompt_command() {

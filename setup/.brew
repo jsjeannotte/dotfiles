@@ -71,14 +71,14 @@ brew install figlet
 # Personal favorites: roman, big, cyberlarge, doh, nancyj, starwars
 function figletfavs() {
     for i in roman big cyberlarge doh nancyj starwars
-    do 
+    do
         echo " "
         echo " "
         echo " "
         echo "$i:"
         echo " "
         figlet -f $i -w 200 $1
-    done  
+    done
 }
 
 
@@ -109,7 +109,7 @@ function installcask() {
   fi
 }
 
-installcask dropbox
+#installcask dropbox
 #installcask google-chrome
 #installcask google-chrome-canary
 installcask imagealpha
@@ -133,16 +133,16 @@ installcask transmission
 installcask vlc
 installcask mou
 
-installcask pycharm
+#installcask pycharm
 
 # Alfred
-installcask alfred
-brew cask alfred link
+#installcask alfred
+#brew cask alfred link
 
 # Evernote
-echo "Y
-"|installcask evernote
-installcask skitch
+#echo "Y
+#"|installcask evernote
+#installcask skitch
 
 
 # DiffMerge
@@ -150,10 +150,10 @@ installcask diffmerge
 ln -s /Applications/DiffMerge.app/Contents/Resources/diffmerge.sh /usr/local/bin/diffmerge
 
 #Install GMail Notifier
-installcask gmail-notifr
+#installcask gmail-notifr
 
 # Install X-Quartz
-installcask install x-quartz
+installcask x-quartz
 
 # Remove outdated versions from the cellar
 brew cleanup
@@ -195,4 +195,3 @@ echo " "
 echo "====================================================================================================================="
 echo "When your done, please restart your system"
 echo "====================================================================================================================="
-
