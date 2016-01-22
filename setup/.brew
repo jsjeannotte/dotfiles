@@ -134,15 +134,16 @@ installcask vlc
 installcask mou
 
 #installcask pycharm
+installcask pycharm
+installcask sourcetree
 
 # Alfred
-#installcask alfred
+installcask alfred
 #brew cask alfred link
 
 # Evernote
-#echo "Y
-#"|installcask evernote
-#installcask skitch
+yes Y|installcask evernote
+installcask skitch
 
 
 # DiffMerge
