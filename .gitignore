@@ -17,3 +17,5 @@ Thumbs.db
 .dropbox
 .sublime-project
 bashrc.extra.sh
+
+.idea
