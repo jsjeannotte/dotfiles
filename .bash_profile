@@ -1,11 +1,17 @@
+#!/bin/bash -ex
+
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.bash_profile_{path,prompt,exports,aliases,functions,extra}.sh; do
-	[ -r "$file" ] && source "$file"
+for file in ~/.bash_profile_{path,prompt,exports,aliases,functions,pae,extra}.sh; do
+    #echo "Processing $file"
+    [ -r "$file" ] && source "$file"
+    if [[ $? -ne 0 ]]; then
+        echo "Error in your $file ... Please check and fix"
+    fi
 done
 unset file
 
@@ -22,7 +28,7 @@ shopt -s cdspell
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
 for option in autocd globstar; do
-	shopt -s "$option" 2> /dev/null
+    shopt -s "$option" 2> /dev/null
 done
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
@@ -36,8 +42,8 @@ complete -W "NSGlobalDomain" defaults
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall
 
 # Autocomplete Grunt commands
-which grunt &> /dev/null && eval "$(grunt --completion=bash)"
+(which grunt &> /dev/null && eval "$(grunt --completion=bash)") ||:
 
 # If possible, add tab completion for many more commands
-[ -f /etc/bash_completion ] && source /etc/bash_completion
-[ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion
+([ -f /etc/bash_completion ] && source /etc/bash_completion) ||:
+([ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion) ||:

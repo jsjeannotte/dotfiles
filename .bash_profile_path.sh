@@ -15,8 +15,8 @@ for p in ${pythonpths[@]}; do
     fi
 done
 
-# Add brew coreutils to the PATH
-BREWTEST=$(brew --prefix coreutils 2>&1 > /dev/null)
-if [ $? -eq 0 ]; then
-    export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
-fi
+# # Add brew coreutils to the PATH
+# BREWTEST=$(brew --prefix coreutils 2>&1 > /dev/null)
+# if [ $? -eq 0 ]; then
+#     export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+# fi

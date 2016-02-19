@@ -555,15 +555,20 @@ function powerline_last_status_prompt {
     fi
 }
 
+
 function show_icon() {
   ENVIRONMENT=""
-  # if [[ ! -z $NETFLIX_ENVIRONMENT ]]; then
-  #   if [[ $NETFLIX_ENVIRONMENT == "prod" ]]; then
-  #     ENVIRONMENT="🔴 "
-  #   else
-  #     ENVIRONMENT="⚪️ "
-  #   fi
-  # fi
+  if [[ ! -z $BASTION_ENVIRONMENT ]]; then
+    if [[ $BASTION_ENVIRONMENT == "prod" ]] || [[ $BASTION_ENVIRONMENT == "seg" ]]; then
+      ENVIRONMENT="${bold_white}${background_red} ${BASTION_ENVIRONMENT} ${normal}"
+      TERMTABCOLORANDTITLE="\033]6;1;bg;red;brightness;255\a\033]0;PROD\007"
+    else
+      ENVIRONMENT="${blue}${background_white} ${BASTION_ENVIRONMENT} ${normal}"
+      TERMTABCOLORANDTITLE="\033]6;1;bg;green;brightness;255\a\033]0;${BASTION_ENVIRONMENT}\007"
+    fi
+  fi
+  # Disabling term tab color and title, causing multi-line issues, will debug later.
+  TERMTABCOLORANDTITLE=""
 }
 
 function powerline_prompt_command() {
