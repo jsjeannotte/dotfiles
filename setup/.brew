@@ -122,8 +122,14 @@ installcask miro-video-converter
 brew install python
 pip install pygments pylint httplib2 google-api-python-client python-dateutil --upgrade
 
-# Sublime Text
-installcask sublime-text
+# Sublime Text 2
+# installcask sublime-text
+
+# Sublime Text 3
+brew install caskroom/cask/brew-cask
+brew tap caskroom/versions
+brew cask install sublime-text3
+
 
 installcask the-unarchiver
 installcask tor-browser
@@ -155,6 +161,10 @@ ln -s /Applications/DiffMerge.app/Contents/Resources/diffmerge.sh /usr/local/bin
 
 # Install X-Quartz
 installcask x-quartz
+
+# Install 7z stuff
+installcask zipeg
+installcask keka
 
 # Remove outdated versions from the cellar
 brew cleanup
