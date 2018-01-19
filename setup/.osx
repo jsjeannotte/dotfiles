@@ -25,7 +25,7 @@ sudo nvram SystemAudioVolume=0
 # sudo pmset -a standbydelay 86400
 
 # Menu bar: disable transparency
-defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false
+# defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false
 
 # Menu bar: show remaining battery time (on pre-10.8); hide percentage
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
@@ -33,7 +33,9 @@ defaults write com.apple.menuextra.battery ShowTime -string "YES"
 
 # Menu bar: hide the useless Time Machine and Volume icons
 #defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" "/System/Library/CoreServices/Menu Extras/AirPort.menu" "/System/Library/CoreServices/Menu Extras/Battery.menu" "/System/Library/CoreServices/Menu Extras/Clock.menu"
-defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreServices/Menu Extras/Displays.menu" "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" "/System/Library/CoreServices/Menu Extras/AirPort.menu" "/System/Library/CoreServices/Menu Extras/Volume.menu" "/System/Library/CoreServices/Menu Extras/TextInput.menu" "/System/Library/CoreServices/Menu Extras/Battery.menu" "/System/Library/CoreServices/Menu Extras/Clock.menu"
+# defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreServices/Menu Extras/Displays.menu" "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" "/System/Library/CoreServices/Menu Extras/AirPort.menu" "/System/Library/CoreServices/Menu Extras/Volume.menu" "/System/Library/CoreServices/Menu Extras/TextInput.menu" "/System/Library/CoreServices/Menu Extras/Battery.menu" "/System/Library/CoreServices/Menu Extras/Clock.menu"
+defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreServices/Menu Extras/Displays.menu" "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" "/System/Library/CoreServices/Menu Extras/Volume.menu" "/System/Library/CoreServices/Menu Extras/TextInput.menu" "/System/Library/CoreServices/Menu Extras/Battery.menu" "/System/Library/CoreServices/Menu Extras/Clock.menu"
+
 # "/System/Library/CoreServices/Menu Extras/Displays.menu",
 # "/System/Library/CoreServices/Menu Extras/TimeMachine.menu",
 # "/System/Library/CoreServices/Menu Extras/Bluetooth.menu",
@@ -92,7 +94,7 @@ defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 #defaults write com.apple.CrashReporter DialogType -string "none"
 
 # Set Help Viewer windows to non-floating mode
-defaults write com.apple.helpviewer DevMode -bool true
+# defaults write com.apple.helpviewer DevMode -bool true
 
 # Fix for the ancient UTF-8 bug in QuickLook (http://mths.be/bbo)
 # Commented out, as this is known to cause problems when saving files in
@@ -101,10 +103,10 @@ defaults write com.apple.helpviewer DevMode -bool true
 
 # Reveal IP address, hostname, OS version, etc. when clicking the clock
 # in the login window
-sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+# sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
 # Restart automatically if the computer freezes
-systemsetup -setrestartfreeze on
+sudo systemsetup -setrestartfreeze on
 
 # # Never go into computer sleep mode
 # systemsetup -setcomputersleep Off > /dev/null
@@ -190,18 +192,18 @@ defaults write com.apple.BezelServices kDimTime -int 300
 # defaults write com.apple.screensaver askForPassword -int 1
 # defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-# Save screenshots to the desktop
-mkdir -p $HOME/Desktop/Screenshots
-defaults write com.apple.screencapture location -string "$HOME/Desktop/Screenshots"
+# Save screenshots to Dropbox
+mkdir -p $HOME/Dropbox/Screenshots
+defaults write com.apple.screencapture location -string "$HOME/Dropbox/Screenshots"
 
 # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
 defaults write com.apple.screencapture type -string "png"
 
 # Disable shadow in screenshots
-defaults write com.apple.screencapture disable-shadow -bool true
+# defaults write com.apple.screencapture disable-shadow -bool true
 
 # Enable subpixel font rendering on non-Apple LCDs
-defaults write NSGlobalDomain AppleFontSmoothing -int 2
+# defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
 # # Enable HiDPI display modes (requires restart) - Retina Display
 # sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
@@ -293,7 +295,7 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 # Disable the warning before emptying the Trash
-defaults write com.apple.finder WarnOnEmptyTrash -bool false
+# defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
 # Empty Trash securely by default
 defaults write com.apple.finder EmptyTrashSecurely -bool true
@@ -333,7 +335,7 @@ defaults write com.apple.dock show-process-indicators -bool true
 #defaults write com.apple.dock persistent-apps -array
 
 # Don’t animate opening applications from the Dock
-defaults write com.apple.dock launchanim -bool false
+# defaults write com.apple.dock launchanim -bool false
 
 # Speed up Mission Control animations
 defaults write com.apple.dock expose-animation-duration -float 0.1
@@ -343,13 +345,13 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write com.apple.dock expose-group-by-app -bool false
 
 # Disable Dashboard
-defaults write com.apple.dashboard mcx-disabled -bool true
+#defaults write com.apple.dashboard mcx-disabled -bool true
 
 # Don’t show Dashboard as a Space
-defaults write com.apple.dock dashboard-in-overlay -bool true
+#defaults write com.apple.dock dashboard-in-overlay -bool true
 
 # Don’t automatically rearrange Spaces based on most recent use
-defaults write com.apple.dock mru-spaces -bool false
+#defaults write com.apple.dock mru-spaces -bool false
 
 # Remove the auto-hiding Dock delay
 defaults write com.apple.dock autohide-delay -float 0
@@ -388,15 +390,18 @@ defaults write com.apple.dock showhidden -bool true
 # # 10: Put display to sleep
 # # 11: Launchpad
 # # 12: Notification Center
+
 # # Top left screen corner → Mission Control
 # defaults write com.apple.dock wvous-tl-corner -int 2
 # defaults write com.apple.dock wvous-tl-modifier -int 0
+
 # # Top right screen corner → Desktop
 # defaults write com.apple.dock wvous-tr-corner -int 4
 # defaults write com.apple.dock wvous-tr-modifier -int 0
+
 # # Bottom left screen corner → Start screen saver
-# defaults write com.apple.dock wvous-bl-corner -int 5
-# defaults write com.apple.dock wvous-bl-modifier -int 0
+defaults write com.apple.dock wvous-bl-corner -int 5
+defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
 # SizeUp.app                                                                  #
@@ -429,6 +434,6 @@ sudo pmset -a hibernatemode 25
 
 ###############################################################################
 # Disable Spotlight
-############################################################################### 
+###############################################################################
 #sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
 #sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist

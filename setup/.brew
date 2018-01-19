@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Disable GateKeeper
-spctl --master-disable
+#spctl --master-disable
 
 # Make sure we’re using the latest Homebrew
 brew update
@@ -26,45 +26,41 @@ brew install wget --enable-iri
 #brew install narwhal
 
 # Install more recent versions of some OS X tools
-brew tap homebrew/dupes
-brew install homebrew/dupes/grep
+#brew tap homebrew/dupes
+#brew install homebrew/dupes/grep
 #brew tap josegonzalez/homebrew-php
 #brew install php54
-
-# These two formulae didn’t work well last time I tried them:
-#brew install homebrew/dupes/vim
-#brew install homebrew/dupes/screen
 
 ######################################
 # Install other useful binaries
 ######################################
 brew install ack
 #brew install exiv2
-brew install git
+#brew install git
 brew install bash-completion
 
 # Tweek to make the completion work the 'g' alias for git
-cat <<\EOF>/usr/local/etc/bash_completion.d/g-completion.bash
+cat << \EOF >/usr/local/etc/bash_completion.d/g-completion.bash
 complete -o bashdefault -o default -o nospace -F _git g 2>/dev/null \ || complete -o default -o nospace -F _git g
 EOF
 
-brew install git-flow
+# brew install git-flow
 
-brew install lynx
-brew install node
+# brew install lynx
+# brew install node
 # Pigz = Parallel gzip - Zlib
-brew install pigz
+# brew install pigz
 
 # http://blog.johnrbussiculo.com/2013/01/batch-rename-multiple-files-mac-osx-command-line/
-brew install rename
+# brew install rename
 
 #brew install rhino
-brew install tree
-brew install webkit2png
-brew install zopfli
-brew install imagemagick
+# brew install tree
+# brew install webkit2png
+# brew install zopfli
+# brew install imagemagick
 
-brew install android-sdk
+# brew install android-sdk
 
 # Figlet: Nice ascii big text (to show text in all available fonts: showfigfonts test)
 brew install figlet
@@ -88,18 +84,18 @@ brew install gawk
 brew install markdown
 
 # Install F3 (test SD Card or any other volume integrety)
-brew install f3
+# brew install f3
 
 # Install watch
 brew install watch
 
 # Add homebrew/versions
-brew tap homebrew/versions
+#brew tap homebrew/versions
 #brew install lua52
 
 # Install native apps
-brew tap phinze/homebrew-cask
-brew install brew-cask
+# brew tap phinze/homebrew-cask
+# brew install brew-cask
 
 function installcask() {
   if brew cask info "${@}" | grep "Not installed" > /dev/null; then
@@ -109,100 +105,80 @@ function installcask() {
   fi
 }
 
-#installcask dropbox
+installcask dropbox
 #installcask google-chrome
 #installcask google-chrome-canary
-installcask imagealpha
-installcask imageoptim
+#installcask imagealpha
+#installcask imageoptim
 installcask iterm2
 #installcask macvim
-installcask miro-video-converter
+#installcask miro-video-converter
 
 #Python
-brew install python
-pip install pygments pylint httplib2 google-api-python-client python-dateutil --upgrade
+#brew install python
+#pip install pygments pylint httplib2 google-api-python-client python-dateutil --upgrade
 
 # Sublime Text 2
 # installcask sublime-text
 
 # Sublime Text 3
-brew install caskroom/cask/brew-cask
-brew tap caskroom/versions
-brew cask install sublime-text3
+#brew install caskroom/cask/brew-cask
+#brew tap caskroom/versions
+#brew cask install sublime-text3
 
 
-installcask the-unarchiver
-installcask tor-browser
-installcask transmission
+#installcask the-unarchiver
+#installcask tor-browser
+#installcask transmission
 #installcask ukelele
 #installcask virtualbox
-installcask vlc
-installcask mou
+#installcask vlc
+#installcask mou
 
 #installcask pycharm
 installcask pycharm
 installcask sourcetree
+
+# 1Password
+installcask 1password
 
 # Alfred
 installcask alfred
 #brew cask alfred link
 
 # Evernote
-yes Y|installcask evernote
+installcask evernote
 installcask skitch
 
+# Atom
+installcask atom
+
+# Aerial ScreenSaver
+installcask aerial
+
+# Size Up
+installcask sizeup
 
 # DiffMerge
-installcask diffmerge
-ln -s /Applications/DiffMerge.app/Contents/Resources/diffmerge.sh /usr/local/bin/diffmerge
+#installcask diffmerge
+#ln -s /Applications/DiffMerge.app/Contents/Resources/diffmerge.sh /usr/local/bin/diffmerge
 
 #Install GMail Notifier
 #installcask gmail-notifr
 
 # Install X-Quartz
-installcask x-quartz
+#installcask x-quartz
 
 # Install 7z stuff
-installcask zipeg
-installcask keka
+#installcask zipeg
+#installcask keka
 
 # Remove outdated versions from the cellar
-brew cleanup
-
-# Copy helper scripts
-SCRIPTFOLDER="$( dirname "${BASH_SOURCE[0]}" )"
-echo "Copying files from $SCRIPTFOLDER/root/ to /"
-cd "$SCRIPTFOLDER"/root && cp -r . /
+#brew cleanup
 
 # Install SSL certificates for lwp-request (some site will not work without this)
-sudo cpan install LMP::UserAgen Mozilla::CA
+#sudo cpan install LMP::UserAgen Mozilla::CA
 
 # Install DNSYO: Query 1500+ DNS server and give report of the results
-sudo pip install dnsyo --upgrade
+#sudo pip install dnsyo --upgrade
 # Example: dnsyo movies.netflix.com --extended -q=ALL
-
-# Manual install
-echo " "
-echo " "
-echo "====================================================================================================================="
-echo "Automatic installation completed. Here are the links to paid apps for manual installation (Command+Click from iTerm):"
-echo "====================================================================================================================="
-echo "http://magnet.crowdcafe.com/ (macappstore://itunes.apple.com/app/id441258766?mt)"
-echo "http://google.com/chrome "
-echo " "
-echo "====================================================================================================================="
-echo "Let's launch some app so that you can configure them:"
-echo "====================================================================================================================="
-echo "Dropbox"
-open -a Dropbox
-echo "Alfred 2"
-open -a Alfred\ 2
-echo "Caffeine"
-open -a Caffeine
-echo "Evernote"
-open -a Evernote
-echo " "
-echo " "
-echo "====================================================================================================================="
-echo "When your done, please restart your system"
-echo "====================================================================================================================="
