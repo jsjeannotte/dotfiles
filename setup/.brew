@@ -97,6 +97,8 @@ brew install watch
 # brew tap phinze/homebrew-cask
 # brew install brew-cask
 
+brew install mosh
+
 function installcask() {
   if brew cask info "${@}" | grep "Not installed" > /dev/null; then
     brew cask install "${@}"
